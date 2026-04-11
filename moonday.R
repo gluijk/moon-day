@@ -207,4 +207,4 @@ for (f in 1:NFRAMES) {
 
 
 # MP4 Video (MPEG-4 AVC/H.264):
-# ffmpeg -framerate 24.43587492 -i moon_%05d.tif -i mix.wav -c:v libx264 -crf 18 -pix_fmt yuv420p -vf reverse moonday.mp4
+# ffmpeg -framerate 24 -i moon_%05d.tif -i 26seconds.wav -c:v libx264 -crf 18 -pix_fmt yuv420p -vf reverse moonday.mp4
