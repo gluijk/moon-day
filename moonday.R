@@ -1,6 +1,6 @@
-# Planets projection conversions from equirectangular to orthographic
+# False 3D animation of a whole Moon day
 # www.overfitting.net
-# https://www.overfitting.net/2025/11/proyecciones-marcianas-con-r.html
+# https://www.overfitting.net/2026/04/un-dia-en-la-luna.html
 
 library(tiff)  # save 16-bit TIFF's
 library(Rcpp)
