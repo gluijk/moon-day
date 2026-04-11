@@ -95,7 +95,6 @@ cppFunction('
 ')
 
 
-
 # Hillshade calculation
 hillshademap=function(DEM, dx=25, dlight=c(0, 2, 3), gamma=1) {
     # hillshademap() inputs DEM data and outputs a hillshade matrix
@@ -152,10 +151,10 @@ hillshademap=function(DEM, dx=25, dlight=c(0, 2, 3), gamma=1) {
 
 
 ###########################################################
-# MOON PROJECTIONS
+# MOON DAY
 
 
-# DEM AND HILLSHADE
+# Process DEM to obtain HILLSHADE
 
 DEMWHOLE=readTIFF("ldem_16_uint.tif")
 hist(DEMWHOLE, breaks=500, xlim=c(0,1))
@@ -165,9 +164,6 @@ DEMWHOLE=DEMWHOLE/max(DEMWHOLE)
 writeTIFF(DEMWHOLE, "ldem_16_uint_norm.tif")
 # MAXHEIGHT=19.5*1000  # 19.5km between Moon's deepest basin and highest point
 
-
-# Generate hillshades
-
 # dlight(X=South, Y=East, Z=Up)
 hillshade=hillshademap(DEMWHOLE, dx=1/10, dlight=c(0, 1, 1))
 
@@ -175,22 +171,22 @@ hillshade=hillshademap(DEMWHOLE, dx=1/10, dlight=c(0, 1, 1))
 writeTIFF(hillshade, "hillshade.tif", bits.per.sample=16, compression="LZW")
 
 
+# Build "moon_final_extended.tif" in Photoshop as a combination of colour and hillshade
 
-# REPROJECT
-
+# Build Full HD animation frames by reprojecting sections of "moon_final_extended.tif"
+# from equirectangular to ortographic
 ANCHO=1000
 ALTO=ANCHO
 img=readTIFF("moon_final_extended.tif")
 width=nrow(img)
-mask=readTIFF("mask.tif")
-background=readTIFF("backgroundfinal.tif")
-alpha=0.05
+mask=readTIFF("mask.tif")  # solar mask (dark area)
+background=readTIFF("backgroundfinal.tif")  # full HD title and label
+alpha=0.05  # weighted mix
 
 NFRAMES=640  # total number of frames
-INC=9  # 9 px apart frame to frame
-
+INC=9  # 9px offset from frame to frame
 for (f in 1:NFRAMES) {
-    print(f)
+    print(paste0("Processing frame ", f, "/", NFRAMES, "..."))
     
     # Crop
     DEM=img[, ((f-1)*INC+1):((f-1)*INC+width), ]
