@@ -156,18 +156,17 @@ hillshademap=function(DEM, dx=25, dlight=c(0, 2, 3), gamma=1) {
 
 # Process DEM to obtain HILLSHADE
 
+# Read and normalize DEM
 DEMWHOLE=readTIFF("ldem_16_uint.tif")
 hist(DEMWHOLE, breaks=500, xlim=c(0,1))
 DEMWHOLE=DEMWHOLE-min(DEMWHOLE)
 DEMWHOLE=DEMWHOLE/max(DEMWHOLE)
-
 writeTIFF(DEMWHOLE, "ldem_16_uint_norm.tif")
 # MAXHEIGHT=19.5*1000  # 19.5km between Moon's deepest basin and highest point
 
+# Build hillshade
 # dlight(X=South, Y=East, Z=Up)
 hillshade=hillshademap(DEMWHOLE, dx=1/10, dlight=c(0, 1, 1))
-
-# Save hillshade
 writeTIFF(hillshade, "hillshade.tif", bits.per.sample=16, compression="LZW")
 
 
@@ -208,3 +207,4 @@ for (f in 1:NFRAMES) {
 
 # MP4 Video (MPEG-4 AVC/H.264):
 # ffmpeg -framerate 24 -i moon_%05d.tif -i 26seconds.wav -c:v libx264 -crf 18 -pix_fmt yuv420p -vf reverse moonday.mp4
+
