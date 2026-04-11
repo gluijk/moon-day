@@ -200,7 +200,7 @@ for (f in 1:NFRAMES) {
     dim(out) <- c(ALTO, ANCHO, 3)
     out2=background
     out2[(1080/2-ANCHO/2+1):(1080/2+ANCHO/2), (1920/2-ANCHO/2+1):(1920/2+ANCHO/2),]=out
-    writeTIFF(out2, sprintf("moon_%05d.tif", f), bits.per.sample=8)
+    writeTIFF(out2, sprintf("moon_%05d.tif", f))
 }
 
 
