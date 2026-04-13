@@ -3,9 +3,6 @@
 # https://www.overfitting.net/2026/04/a-que-distancia-de-la-tierra-se-hizo-la.html
 
 
-#########################################
-# 1. PHOTOGRAPHIC METHOD: FOCAL LENGTH, EARTH DIAMETER RATIO,...
-
 library(Cairo)
 
     # Radios
@@ -29,9 +26,6 @@ library(Cairo)
     # Circunferencia
     theta <- seq(0, 2*pi, length.out = 500)
     lines(R * cos(theta), R * sin(theta), col = "blue", lwd = 2)
-
-    # Punto Orion
-    points(d, 0, pch = 16, cex = 1.5)
     
     # Línea centro-Orion
     abline(h=0, v=0)
@@ -61,6 +55,8 @@ library(Cairo)
              d + L, 0 + m4*L,
              col = "darkorange", lwd = 1, lty = 2)
     
+    # Punto Orion
+    points(d, 0, pch = 16, cex = 1.5)
     # Etiqueta
     text(d, 0, labels = "Orion", pos = 3, offset = 1.5)
 
