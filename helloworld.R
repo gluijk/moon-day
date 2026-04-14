@@ -68,7 +68,7 @@ dev.off()
 
 
 ############################################
-# 2. CONFIRM ESTIMATED DISTANCE OVER EARTH MAP
+# 2. VALIDATION OF ESTIMATED DISTANCE OVER EARTH MAP
 
 library(ggmap)  # map_data()
 library(data.table)
@@ -139,13 +139,17 @@ DT=DT[, .(num=.N), by=.(long, lat)]  # summarize to deduplicate points
 DT$phi=DT$long*pi/180  # longitude
 DT$theta=DT$lat*pi/180  # latitude
 
+# MANUALLY ADJUSTED ROTATIONS
+DT$phi=DT$phi + 2*pi/21
+DT$theta=DT$theta + 2*pi/150
+
 # polar to XYZ coordinates conversion
 # NOTE: x and y don't depend on d, but z depends on d so z is nested
 DT$x=polar2x(Rearth, DT$phi, DT$theta)
 DT$y=polar2y(Rearth, DT$phi, DT$theta)
 
-IMAGESIZE=512
-TH=0.9  # allow border
+IMAGESIZE=720  # 512
+TH=1  # 0.9  # allow border
 
 d=Oriond
 DT$z=polar2z(Rearth, DT$phi, DT$theta) + Rearth+d  # Earth along Z axis
